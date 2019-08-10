@@ -6,7 +6,7 @@ sudo apt update && sudo -y apt upgrade
 # dev utils
 sudo apt-get install -y net-tools openssh-server
 
-echo "export PATH=/home/$(whoami)/.local/bin" >> ~/.bashrc
+echo "export PATH=/home/$(whoami)/.local/bin:$PATH" >> ~/.bashrc
 source ~/.bashrc
 
 # VM clipboard
