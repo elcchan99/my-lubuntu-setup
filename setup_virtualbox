@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# apt update
+sudo apt update && sudo -y apt upgrade
+
+# dev utils
+sudo apt-get install -y net-tools openssh-server
+
+echo "export PATH=/home/$(whoami)/.local/bin" >> ~/.bashrc
+source ~/.bashrc
+
+# VM clipboard
+sudo apt-get install -y virtualbox-guest-x11
+sudo VBoxClient --clipboard
+mkdir -p ~/.config/autostart
+vboxcb_path=~/.config/autostart/VboxClipbvoard.desktop
+touch $vboxcb_path
+echo "[Desktop Entry]" | tee -a $vboxcb_path
+echo "Type=Application" | tee -a $vboxcb_path
+echo "Exec=sudo VBoxClient --clipboard" | tee -a $vboxcb_path
+echo "Hidden=false" | tee -a $vboxcb_path
+echo "NoDisplay=false" | tee -a $vboxcb_path
+echo "X-GNOME-Autostart-enabled=true" | tee -a $vboxcb_path
+echo "Name[en_US]=VBox clipboard" | tee -a $vboxcb_path
+echo "Name=VBox clipboard" | tee -a $vboxcb_path
+echo "Comment[en_US]=" | tee -a $vboxcb_path
+echo "Comment=" | tee -a $vboxcb_path
+
+# VM Share Folders
+sudo usermod -aG vboxsf $(whoami)
+
+sudo reboot -h now
